@@ -1,6 +1,7 @@
-package com.back.wiseSaying;
+package com.back.wiseSaying.service;
 
 import com.back.wiseSaying.entity.WiseSaying;
+import com.back.wiseSaying.repository.WiseSayingRepository;
 
 import java.util.List;
 

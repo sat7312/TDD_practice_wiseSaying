@@ -1,4 +1,4 @@
-package com.back.wiseSaying;
+package com.back.wiseSaying.repository;
 
 import com.back.wiseSaying.entity.WiseSaying;
 
@@ -11,6 +11,7 @@ public class WiseSayingRepository {
     private int lastId = 0;
 
     public WiseSaying save(WiseSaying wiseSaying) {
+
         if(wiseSaying.isNew()) {
             wiseSaying.setId(++lastId);
             wiseSayings.add(wiseSaying);
