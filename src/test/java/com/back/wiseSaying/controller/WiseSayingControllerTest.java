@@ -1,9 +1,12 @@
+package com.back.wiseSaying.controller;
+
+import app.AppTestRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppTest {
+public class WiseSayingControllerTest {
 
     @Test
     @DisplayName("'== 명언 앱 ==' 출력")
@@ -75,6 +78,5 @@ public class AppTest {
                         , "1 / 작자미상 / 현재를 사랑하라.");
 
     }
-
 
 }

@@ -1,6 +1,13 @@
+package com.back;
+
+import com.back.system.controller.SystemController;
+import com.back.wiseSaying.controller.WiseSayingController;
+import com.back.wiseSaying.entity.WiseSaying;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class App {
 
