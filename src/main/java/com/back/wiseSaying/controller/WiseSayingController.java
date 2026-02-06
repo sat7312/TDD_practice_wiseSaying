@@ -1,8 +1,9 @@
 package com.back.wiseSaying.controller;
 
+import com.back.global.AppContext;
+import com.back.global.Rq;
 import com.back.wiseSaying.entity.WiseSaying;
 import com.back.wiseSaying.service.WiseSayingService;
-
 
 import java.util.List;
 import java.util.Scanner;
@@ -13,9 +14,9 @@ public class WiseSayingController {
     private WiseSayingService wiseSayingService;
 
 
-    public WiseSayingController(Scanner sc) {
-        this.sc = sc;
-        this.wiseSayingService = new WiseSayingService();
+    public WiseSayingController() {
+        this.sc = AppContext.sc;
+        this.wiseSayingService = AppContext.wiseSayingService;
     }
 
     public void actionAdd() {
@@ -42,5 +43,18 @@ public class WiseSayingController {
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
+    }
+
+    public void actionDelete(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+        boolean deleted = wiseSayingService.delete(id);
+
+        if(!deleted) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
     }
 }
