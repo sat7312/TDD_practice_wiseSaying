@@ -1,12 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
-    private Scanner scanner;
+    private Scanner sc;
     int lastId = 0;
+    List<WiseSaying> wiseSayings = new ArrayList<>();
+    private WiseSayingController wiseSayingController;
+    private SystemController systemController;
 
-    public App(Scanner scanner) {
-        this.scanner = scanner;
+    public App(Scanner sc) {
+        this.sc = sc;
+        this.wiseSayingController = new WiseSayingController(sc);
+        this.systemController = new SystemController();
     }
 
     public void run() {
@@ -14,18 +21,13 @@ public class App {
 
         while (true) {
             System.out.println("명령) ");
-            String cmd = scanner.nextLine();
+            String cmd = sc.nextLine();
 
             switch (cmd) {
-                case "등록" -> {
-                    System.out.print("명언 : ");
-                    String saying = scanner.nextLine();
-                    System.out.print("작가 : ");
-                    String author = scanner.nextLine();
-                    lastId++;
-                    System.out.println("%d번 명언이 등록되었습니다." .formatted(lastId));
-                }
+                case "등록" -> wiseSayingController.actionAdd();
+                case "목록" -> wiseSayingController.actionList();
                 case "종료" -> {
+                    systemController.actionExit();
                     return;
                 }
             }
