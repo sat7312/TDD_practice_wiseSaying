@@ -1,17 +1,30 @@
 package com.back.standard.util;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UtilFileTest {
+    //테스트 전처리
+    @BeforeAll
+    static void beforeAll() {
+        Util.file.mkdir("temp");
+    }
+
+    //테스트 후처리
+    @AfterAll
+    static void afterAll() {
+        Util.file.rmdir("temp");
+    }
 
     @Test
     @DisplayName("파일 생성")
     void t1() {
         // 무언가를 세팅하고
-        String filePath = "test.txt";
+        String filePath = "temp/test.txt";
 
         // 수행하면
         Util.file.touch(filePath);
@@ -28,7 +41,8 @@ public class UtilFileTest {
     @DisplayName("파일 삭제")
     void t2() {
         // given
-        String filePath = "test.txt";
+        String filePath = "temp/test.txt";
+
         Util.file.touch(filePath); // 파일 생성
 
         // when
@@ -43,7 +57,7 @@ public class UtilFileTest {
     @DisplayName("파일 읽기/쓰기")
     void t3() {
         // given
-        String filePath = "test.txt";
+        String filePath = "temp/test.txt";
         Util.file.set(filePath, "hello world"); // 파일 쓰기
 
         // when
