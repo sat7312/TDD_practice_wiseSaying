@@ -5,7 +5,6 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public class Util {
-
     // 이너 클래스
     public static class file {
 
@@ -26,6 +25,14 @@ public class Util {
             }
         }
 
+        public static String get(String filePath, String defaultValue) {
+            try {
+                return Files.readString(getPath(filePath));
+            } catch (IOException e) {
+                return defaultValue;
+            }
+        }
+
         private static void writeFile(Path path, String content) throws IOException {
             Files.writeString(path, content,
                     StandardOpenOption.CREATE,
@@ -33,7 +40,9 @@ public class Util {
         }
 
         private static void handleFileWriteError(Path path, String content, IOException e) {
+
             Path parentDir = path.getParent();
+
             if (parentDir != null && Files.notExists(parentDir)) {
                 try {
                     Files.createDirectories(parentDir);
@@ -50,7 +59,20 @@ public class Util {
             return Files.exists(getPath(filePath));
         }
 
+        public static boolean rmdir(String dirPath) {
+            return delete(dirPath);
+        }
+
+        public static void  mkdir(String dirPath) {
+            try {
+                Files.createDirectories(getPath(dirPath));
+            } catch (IOException e) {
+                throw new RuntimeException("디렉토리 생성 실패: " + dirPath, e);
+            }
+        }
+
         private static class FileDeleteVisitor extends SimpleFileVisitor<Path> {
+
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 Files.delete(file);
@@ -63,7 +85,6 @@ public class Util {
                 return FileVisitResult.CONTINUE;
             }
         }
-
 
         public static boolean delete(String filePath) {
             try {
@@ -78,5 +99,4 @@ public class Util {
     public static class json {
 
     }
-
 }
