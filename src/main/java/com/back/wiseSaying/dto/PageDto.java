@@ -3,12 +3,10 @@ package com.back.wiseSaying.dto;
 import com.back.wiseSaying.entity.WiseSaying;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class PageDto {
 
@@ -17,4 +15,7 @@ public class PageDto {
     private int totalCount;
     private List<WiseSaying> content;
 
+    public int getPageCount() {
+        return (int) Math.ceil((double) totalCount / pageSize);
+    }
 }

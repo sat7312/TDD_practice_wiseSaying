@@ -7,6 +7,8 @@ import com.back.wiseSaying.entity.WiseSaying;
 import com.back.wiseSaying.service.WiseSayingService;
 
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class WiseSayingController {
 
@@ -53,6 +55,13 @@ public class WiseSayingController {
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
+
+        System.out.print("페이지 : ");
+        String pageMenuStr = IntStream.rangeClosed(1, pageDto.getPageCount())
+                .mapToObj((num) -> num == page ? "[" + num + "]" : String.valueOf(num))
+                .collect(Collectors.joining(" / "));
+
+        System.out.println(pageMenuStr);
     }
 
     public void actionDelete(Rq rq) {
