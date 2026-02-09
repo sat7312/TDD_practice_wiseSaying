@@ -2,10 +2,10 @@ package com.back.wiseSaying.controller;
 
 import com.back.global.AppContext;
 import com.back.global.Rq;
+import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
 import com.back.wiseSaying.service.WiseSayingService;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
@@ -30,14 +30,26 @@ public class WiseSayingController {
         System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId()));
     }
 
-    public void actionList() {
+    public void actionList(Rq rq) {
+
+        String kwt = rq.getParam("keywordType", "");
+        String kw = rq.getParam("keyword", "");
+        int page = rq.getParamAsInt("page", 1);
+        int pageSize = rq.getParamAsInt("pageSize", 5);
+
+        if (kw.isBlank()) {
+            System.out.println("----------------------");
+            System.out.println("검색 타입 : %s".formatted(kwt));
+            System.out.println("검색어 : %s".formatted(kw));
+            System.out.println("----------------------");
+        }
+
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        List<WiseSaying> wiseSayings = wiseSayingService.findListDesc();
+        PageDto pageDto = wiseSayingService.findListDesc(kw, kwt, page, pageSize);
 
-        wiseSayings
-
+        pageDto.getContent()
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));

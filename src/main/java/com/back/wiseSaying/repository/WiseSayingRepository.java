@@ -1,5 +1,6 @@
 package com.back.wiseSaying.repository;
 
+import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
 
 import java.util.ArrayList;
@@ -20,8 +21,17 @@ public class WiseSayingRepository {
         return wiseSaying;
     }
 
-    public List<WiseSaying> findListDesc() {
-        return wiseSayings.reversed();
+    public PageDto findListDesc(int page, int pageSize) {
+
+        int totalCount = wiseSayings.size();
+
+        List<WiseSaying> content = wiseSayings.reversed()
+                .stream()
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
+
+        return new PageDto(page, pageSize, totalCount, content);
     }
 
     public boolean delete(int id) {
@@ -34,5 +44,41 @@ public class WiseSayingRepository {
                 .filter(wiseSaying -> wiseSaying.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public PageDto findByContentKeywordOrderByDesc(String kw, int page, int pageSize) {
+
+        int totalCount = wiseSayings
+                .stream()
+                .filter(w -> w.getAuthor().contains(kw))
+                .toList()
+                .size();
+
+        List<WiseSaying> content = wiseSayings.reversed()
+                .stream()
+                .filter(w -> w.getSaying().contains(kw))
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
+
+        return new PageDto(page, pageSize, totalCount, content);
+    }
+
+    public PageDto findByAuthorKeywordOrderByDesc(String kw, int page, int pageSize) {
+
+        int totalCount = wiseSayings
+                .stream()
+                .filter(w -> w.getAuthor().contains(kw))
+                .toList()
+                .size();
+
+        List<WiseSaying> content = wiseSayings.reversed()
+                .stream()
+                .filter(w -> w.getAuthor().contains(kw))
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
+
+        return new PageDto(page, pageSize, totalCount, content);
     }
 }
