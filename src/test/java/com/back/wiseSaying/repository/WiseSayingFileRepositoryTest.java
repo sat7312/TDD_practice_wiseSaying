@@ -31,14 +31,13 @@ public class WiseSayingFileRepositoryTest {
     @Test
     @DisplayName("명언 저장")
     void t1() {
-        WiseSaying wiseSaying = new WiseSaying(0,"꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        WiseSaying wiseSaying = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
 
         wiseSayingFileRepository.save(wiseSaying);
 
-        WiseSaying foundedWiseSaying = wiseSayingFileRepository.findByIdOrNull(1);
+        WiseSaying foundedWiseSaying = wiseSayingFileRepository.findById(1).get();
 
         assertThat(foundedWiseSaying).isEqualTo(wiseSaying);
-
     }
 
     @Test
@@ -50,13 +49,10 @@ public class WiseSayingFileRepositoryTest {
         wiseSayingFileRepository.save(wiseSaying1);
         wiseSayingFileRepository.save(wiseSaying2);
 
-        WiseSaying foundedWiseSaying1 = wiseSayingFileRepository.findByIdOrNull(1);
+        WiseSaying foundedWiseSaying1 = wiseSayingFileRepository.findById(1).get();
         assertThat(foundedWiseSaying1).isEqualTo(wiseSaying1);
 
-        WiseSaying foundedWiseSaying2 = wiseSayingFileRepository.findByIdOrNull(2);
+        WiseSaying foundedWiseSaying2 = wiseSayingFileRepository.findById(2).get();
         assertThat(foundedWiseSaying2).isEqualTo(wiseSaying2);
-
-
     }
-
 }
