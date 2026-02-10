@@ -2,6 +2,8 @@ package com.back.wiseSaying.repository;
 
 import com.back.global.AppContext;
 import com.back.wiseSaying.entity.WiseSaying;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +18,20 @@ public class WiseSayingFileRepositoryTest {
         wiseSayingFileRepository = AppContext.wiseSayingFileRepository;
     }
 
+    @BeforeEach
+    public void beforeClear() {
+        wiseSayingFileRepository.clear();
+    }
+
+    @AfterEach
+    public void AfterClear() {
+        wiseSayingFileRepository.clear();
+    }
+
     @Test
     @DisplayName("명언 저장")
     void t1() {
-        WiseSaying wiseSaying = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        WiseSaying wiseSaying = new WiseSaying(0,"꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
 
         wiseSayingFileRepository.save(wiseSaying);
 
@@ -46,4 +58,5 @@ public class WiseSayingFileRepositoryTest {
 
 
     }
+
 }

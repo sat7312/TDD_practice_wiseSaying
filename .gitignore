@@ -41,6 +41,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-### custom ###
 temp/
+db/
