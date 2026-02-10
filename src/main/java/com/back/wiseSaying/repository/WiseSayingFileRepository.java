@@ -21,10 +21,13 @@ public class WiseSayingFileRepository {
             Map<String, Object> wiseSayingMap = wiseSaying.toMap();
             String jsonStr = Util.json.toString(wiseSayingMap);
             Util.file.set("%s/%d.json".formatted(getDbPath(), wiseSaying.getId()), jsonStr);
-
         }
 
         return wiseSaying;
+    }
+
+    public void delete(WiseSaying wiseSaying1) {
+        Util.file.delete("%s/%d.json".formatted(getDbPath(), wiseSaying1.getId()));
     }
 
     private int getLastId() {
