@@ -14,7 +14,6 @@ public class UtilJsonTest {
     @DisplayName("Map을 Json으로 바꿀 수 있다.")
     void t1() {
         // given
-
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id", 1);
         map.put("name", "홍길동");
