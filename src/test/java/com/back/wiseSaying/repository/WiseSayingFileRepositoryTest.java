@@ -1,9 +1,9 @@
 package com.back.wiseSaying.repository;
 
+import com.back.global.AppConfig;
 import com.back.global.AppContext;
 import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +18,7 @@ public class WiseSayingFileRepositoryTest {
     private WiseSayingFileRepository wiseSayingFileRepository;
 
     public WiseSayingFileRepositoryTest() {
+        AppConfig.setTestMode();
         AppContext.init();
         wiseSayingFileRepository = AppContext.wiseSayingFileRepository;
     }

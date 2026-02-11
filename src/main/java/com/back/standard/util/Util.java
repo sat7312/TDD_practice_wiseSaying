@@ -93,6 +93,7 @@ public class Util {
             }
         }
 
+
         public static boolean delete(String filePath) {
             try {
                 Files.walkFileTree(getPath(filePath), new FileDeleteVisitor());
@@ -177,4 +178,5 @@ public class Util {
             return map;
         }
     }
+
 }

@@ -15,8 +15,7 @@ public class WiseSayingController {
     private Scanner sc;
     private WiseSayingService wiseSayingService;
 
-
-    public WiseSayingController() {
+    public WiseSayingController(Scanner sc) {
         this.sc = AppContext.sc;
         this.wiseSayingService = AppContext.wiseSayingService;
     }
@@ -32,6 +31,40 @@ public class WiseSayingController {
         System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId()));
     }
 
+    public void actionDelete(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+        boolean deleted = wiseSayingService.delete(id);
+
+        if (!deleted) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
+
+    }
+
+    public void actionModify(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+
+        WiseSaying wiseSaying = wiseSayingService.findByIdOrNull(id);
+
+        if (wiseSaying == null) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        System.out.println("명언(기존) : %s".formatted(wiseSaying.getSaying()));
+        String newSaying = sc.nextLine();
+        System.out.println("작가(기존) : %s".formatted(wiseSaying.getAuthor()));
+        String newAuthor = sc.nextLine();
+
+        wiseSayingService.modify(wiseSaying, newSaying, newAuthor);
+
+    }
+
     public void actionList(Rq rq) {
 
         String kwt = rq.getParam("keywordType", "");
@@ -41,7 +74,7 @@ public class WiseSayingController {
 
         if (kw.isBlank()) {
             System.out.println("----------------------");
-            System.out.println("검색 타입 : %s".formatted(kwt));
+            System.out.println("검색타입 : %s".formatted(kwt));
             System.out.println("검색어 : %s".formatted(kw));
             System.out.println("----------------------");
         }
@@ -57,42 +90,11 @@ public class WiseSayingController {
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
 
         System.out.print("페이지 : ");
-        String pageMenuStr = IntStream.rangeClosed(1, pageDto.getPageCount())
-                .mapToObj((num) -> num == page ? "[" + num + "]" : String.valueOf(num))
+        String pageMenuStr = IntStream
+                .rangeClosed(1, pageDto.getPageCount())
+                .mapToObj((num) -> num == page ? "[" + num + "] " : String.valueOf(num))
                 .collect(Collectors.joining(" / "));
 
         System.out.println(pageMenuStr);
-    }
-
-    public void actionDelete(Rq rq) {
-
-        int id = rq.getParamAsInt("id", -1);
-        boolean deleted = wiseSayingService.delete(id);
-
-        if(!deleted) {
-            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
-            return;
-        }
-
-        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
-    }
-
-    public void actionModify(Rq rq) {
-
-        int id = rq.getParamAsInt("id", -1);
-
-        WiseSaying wiseSaying = wiseSayingService.findByIdOrNull(id);
-
-        if(wiseSaying == null) {
-            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
-            return;
-        }
-
-        System.out.println("명언(기존) : %s".formatted(wiseSaying.getSaying()));
-        String newSaying = sc.nextLine();
-        System.out.println("작가(기존) : %s".formatted(wiseSaying.getAuthor()));
-        String newAuthor = sc.nextLine();
-
-        wiseSayingService.modify(wiseSaying, newSaying, newAuthor);
     }
 }
