@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class Util {
+
     public static class file {
 
         private static Path getPath(String filePath) {
@@ -34,6 +35,7 @@ public class Util {
 
         private static void handleFileWriteError(Path path, String content, IOException e) {
             Path parentDir = path.getParent();
+
             if (parentDir != null && Files.notExists(parentDir)) {
                 try {
                     Files.createDirectories(parentDir);
@@ -115,7 +117,9 @@ public class Util {
     }
 
     public static class json {
+
         public static String toString(Map<String, Object> map) {
+
             StringBuilder sb = new StringBuilder();
 
             sb.append("{");
@@ -143,6 +147,7 @@ public class Util {
         }
 
         public static Map<String, Object> toMap(String jsonStr) {
+
             Map<String, Object> map = new LinkedHashMap<>();
 
             jsonStr = jsonStr.substring(1, jsonStr.length() - 1);

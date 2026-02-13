@@ -48,7 +48,6 @@ public class WiseSayingController {
     public void actionModify(Rq rq) {
 
         int id = rq.getParamAsInt("id", -1);
-
         WiseSaying wiseSaying = wiseSayingService.findByIdOrNull(id);
 
         if (wiseSaying == null) {

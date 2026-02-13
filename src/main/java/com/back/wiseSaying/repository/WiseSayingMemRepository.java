@@ -58,6 +58,7 @@ public class WiseSayingMemRepository implements WiseSayingRepository {
     }
 
     private PageDto pageOf(List<WiseSaying> filteredContent, int page, int pageSize) {
+
         int totalCount = filteredContent.size();
 
         List<WiseSaying> pagedFilteredContent = filteredContent.reversed()

@@ -51,12 +51,9 @@ public class Rq {
         }
 
         try {
-
             return Integer.parseInt(value);
-
         } catch (NumberFormatException e) {
             return defaultValue;
         }
-
     }
 }

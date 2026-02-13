@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class WiseSayingFileRepository implements WiseSayingRepository{
+public class WiseSayingFileRepository implements WiseSayingRepository {
 
     public WiseSaying save(WiseSaying wiseSaying) {
 
@@ -45,6 +45,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
     }
 
     public Optional<WiseSaying> findById(int id) {
+
         String jsonStr = Util.file.get("%s/%d.json".formatted(getDbPath(), id), "");
         if( jsonStr.isBlank()) {
             return Optional.empty();
@@ -54,7 +55,6 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
         WiseSaying ws = WiseSaying.fromMap(map);
 
         return Optional.of(ws);
-
     }
 
     public void clear() {
@@ -66,15 +66,18 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
     }
 
     public PageDto findAll(int page, int pageSize) {
+
         List<WiseSaying> filteredContent = findAll().stream()
                 .skip((page - 1) * pageSize)
                 .limit(pageSize)
                 .toList();
+
         int totalCount = findAll().size();
         return new PageDto(page, pageSize, totalCount, filteredContent);
     }
 
     public List<WiseSaying> findAll() {
+
         return Util.file.walkRegularFiles(getDbPath(), "^\\d+\\.json$")
                 .map(path -> Util.file.get(path.toString(), ""))
                 .map(Util.json::toMap)
@@ -83,6 +86,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
     }
 
     public PageDto findByContentContainingDesc(String kw, int page, int pageSize) {
+
         List<WiseSaying> filteredContent = findAll().reversed().stream()
                 .filter(w -> w.getSaying().contains(kw))
                 .toList();
@@ -91,6 +95,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
     }
 
     private PageDto pageOf(List<WiseSaying> filteredContent, int page, int pageSize) {
+
         int totalCount = filteredContent.size();
 
         List<WiseSaying> pagedFilteredContent = filteredContent
@@ -103,6 +108,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
     }
 
     public PageDto findByAuthorContainingDesc(String kw, int page, int pageSize) {
+
         List<WiseSaying> filteredContent = findAll().reversed().stream()
                 .filter(w -> w.getAuthor().contains(kw))
                 .toList();

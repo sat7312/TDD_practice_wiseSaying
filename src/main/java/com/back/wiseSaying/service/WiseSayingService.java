@@ -23,6 +23,7 @@ public class WiseSayingService {
     }
 
     public boolean delete(int id) {
+
         Optional<WiseSaying> wiseSayingOp = wiseSayingRepository.findById(id);
         if(wiseSayingOp.isEmpty()) {
             return false;
@@ -49,5 +50,4 @@ public class WiseSayingService {
     public WiseSaying findByIdOrNull(int id) {
         return wiseSayingRepository.findById(id).orElse(null);
     }
-
 }
